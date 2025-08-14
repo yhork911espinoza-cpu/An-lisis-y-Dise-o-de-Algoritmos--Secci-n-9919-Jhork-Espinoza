@@ -1,0 +1,21 @@
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("Hola mundo");
+        System.out.println("Lol");
+
+        int[] lista = {1, 2, 3, 4, 5};
+        int elemento = 3;
+        boolean found = buscarElemento(lista, elemento);
+
+        System.out.println("Elemento encontrado: " + found);
+    }
+
+    public static boolean buscarElemento(int[] lista, int elemento0) {
+        for (int i : lista) {
+            if (i == elemento0) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
