@@ -1,0 +1,60 @@
+import java.util.LinkedList;
+
+public class TablaHash {
+    private LinkedList<Integer>[] tabla;
+    private int tamaño;
+
+    // Constructor
+    public TablaHash(int tamaño) {
+        this.tamaño = tamaño;
+        tabla = new LinkedList[tamaño];
+        for (int i = 0; i < tamaño; i++) {
+            tabla[i] = new LinkedList<>();
+        }
+    }
+
+    // Función hash
+    private int hash(int clave) {
+        return clave % tamaño;
+    }
+
+    // Insertar elemento
+    public void insertar(int valor) {
+        int indice = hash(valor);
+        tabla[indice].add(valor);
+    }
+
+    // Buscar elemento
+    public boolean buscar(int valor) {
+        int indice = hash(valor);
+        return tabla[indice].contains(valor);
+    }
+
+    // Mostrar tabla completa
+    public void mostrar() {
+        for (int i = 0; i < tamaño; i++) {
+            System.out.print("Índice " + i + ": ");
+            System.out.println(tabla[i]);
+        }
+    }
+
+    // Programa principal
+    public static void main(String[] args) {
+        TablaHash tabla = new TablaHash(10);
+
+        tabla.insertar(15);
+        tabla.insertar(25);
+        tabla.insertar(35);
+        tabla.insertar(5);
+        tabla.insertar(12);
+
+        tabla.mostrar();
+
+        int buscar = 25;
+        if (tabla.buscar(buscar)) {
+            System.out.println("El valor " + buscar + " está en la tabla.");
+        } else {
+            System.out.println("El valor " + buscar + " NO está en la tabla.");
+        }
+    }
+}
