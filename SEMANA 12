@@ -1,0 +1,50 @@
+public class BusquedaComparativa {
+
+    // Búsqueda Lineal: O(n)
+    public static int busquedaLineal(int[] array, int target) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i] == target) {
+                return i; // Encontrado
+            }
+        }
+        return -1; // No encontrado
+    }
+
+    // Búsqueda Binaria: O(log n). REQUIERE array ORDENADO.
+    public static int busquedaBinaria(int[] array, int target) {
+        int low = 0;
+        int high = array.length - 1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            
+            if (array[mid] == target) {
+                return mid; // Encontrado
+            } else if (array[mid] < target) {
+                low = mid + 1; // Descartar mitad izquierda
+            } else {
+                high = mid - 1; // Descartar mitad derecha
+            }
+        }
+        return -1; // No encontrado
+    }
+
+    public static void main(String[] args) {
+        int[] sortedArray = {2, 5, 8, 12, 16, 23, 38, 56, 72, 91}; 
+        int target = 38;
+        
+        long startTime, endTime;
+        
+        // Ejecución Lineal
+        startTime = System.nanoTime();
+        busquedaLineal(sortedArray, target);
+        endTime = System.nanoTime();
+        System.out.println("Lineal (O(n)): " + (endTime - startTime) + " ns");
+
+        // Ejecución Binaria
+        startTime = System.nanoTime();
+        busquedaBinaria(sortedArray, target);
+        endTime = System.nanoTime();
+        System.out.println("Binaria (O(log n)): " + (endTime - startTime) + " ns");
+    }
+}
