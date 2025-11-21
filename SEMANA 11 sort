@@ -1,0 +1,80 @@
+public class QuickSort {
+
+    // Método principal que inicia la ordenación
+    public static void quickSort(int[] array) {
+        // Llama a la función recursiva con los límites del array
+        quickSort(array, 0, array.length - 1);
+    }
+
+    // Función recursiva que implementa la lógica principal
+    private static void quickSort(int[] array, int lowIndex, int highIndex) {
+        
+        // Caso base (detener la recursión): si el array tiene 1 o 0 elementos
+        if (lowIndex >= highIndex) {
+            return;
+        }
+
+        // 1. DIVIDE: Elegir el pivote (usamos el último elemento)
+        int pivot = array[highIndex];
+        
+        // 2. VENCERÁS: Particionar el array. 
+        // Retorna el índice donde el pivote quedó finalmente
+        int leftPointer = partition(array, lowIndex, highIndex, pivot);
+        
+        // 3. COMBINA: Llamadas recursivas para ordenar las sublistas
+        
+        // Ordena la sublista izquierda (menores que el pivote)
+        quickSort(array, lowIndex, leftPointer - 1);
+        
+        // Ordena la sublista derecha (mayores que el pivote)
+        quickSort(array, leftPointer + 1, highIndex);
+    }
+    
+    // Función de Partición: Mueve elementos menores a la izquierda del pivote
+    private static int partition(int[] array, int lowIndex, int highIndex, int pivot) {
+        int leftPointer = lowIndex;
+        int rightPointer = highIndex;
+
+        // Bucle para mover los punteros
+        while (leftPointer < rightPointer) {
+            
+            // Mover puntero izquierdo hasta encontrar un valor >= pivote
+            while (array[leftPointer] <= pivot && leftPointer < rightPointer) {
+                leftPointer++;
+            }
+
+            // Mover puntero derecho hasta encontrar un valor < pivote
+            while (array[rightPointer] >= pivot && leftPointer < rightPointer) {
+                rightPointer--;
+            }
+            
+            // Intercambiar los elementos que están en el lado incorrecto
+            swap(array, leftPointer, rightPointer);
+        }
+        
+        // Una vez que los punteros se encuentran, el elemento en highIndex (el pivote original)
+        // se intercambia con el elemento en leftPointer para colocar el pivote en su posición final.
+        swap(array, leftPointer, highIndex);
+        
+        return leftPointer; // Retorna la posición final del pivote
+    }
+
+    // Función auxiliar para intercambiar dos elementos
+    private static void swap(int[] array, int index1, int index2) {
+        int temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+    }
+
+    // Ejemplo de uso
+    public static void main(String[] args) {
+        int[] numbers = {10, 80, 30, 90, 40, 50, 70};
+        System.out.println("Array original:");
+        for(int n : numbers) { System.out.print(n + " "); }
+        
+        quickSort(numbers);
+        
+        System.out.println("\nArray ordenado:");
+        for(int n : numbers) { System.out.print(n + " "); }
+    }
+}
