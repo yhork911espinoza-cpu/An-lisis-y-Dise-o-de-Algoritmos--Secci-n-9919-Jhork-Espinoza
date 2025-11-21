@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class MetodosRecursivos {
+
+    // 1. Recursión Directa (Factorial)
+    public static long factorial(int n) {
+        if (n <= 1) {
+            return 1; // Caso Base: Detiene la recursión
+        }
+        // Llamada Recursiva: Apila el estado actual (n)
+        return n * factorial(n - 1); 
+    }
+
+    // 2. Backtracking: Encontrar todos los subconjuntos de un array
+    public static List<List<Integer>> subsets(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(result, new ArrayList<>(), nums, 0);
+        return result;
+    }
+
+    private static void backtrack(List<List<Integer>> result, List<Integer> tempList, int[] nums, int start) {
+        // Acepta la solución parcial
+        result.add(new ArrayList<>(tempList)); 
+        
+        for (int i = start; i < nums.length; i++) {
+            // A. CHOOSE: Añade elemento (avanza en la Pila)
+            tempList.add(nums[i]);
+            
+            // B. EXPLORE: Llamada recursiva
+            backtrack(result, tempList, nums, i + 1); 
+            
+            // C. UNCHOOSE/BACKTRACK: Elimina elemento (deshace la elección)
+            tempList.remove(tempList.size() - 1); 
+        }
+    }
+
+    public static void main(String[] args) {
+        // Prueba Recursión Directa
+        System.out.println("Factorial de 5 (Recursivo): " + factorial(5)); 
+        
+        // Prueba Backtracking
+        int[] set = {1, 2, 3};
+        System.out.println("\nSubconjuntos (Backtracking):");
+        System.out.println(subsets(set));
+    }
+}
