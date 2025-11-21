@@ -1,0 +1,28 @@
+public class FactorialRecursivo {
+
+    // 1. Recursividad Directa y Uso de Pila de Llamadas
+    public static long calcularFactorial(int n) {
+        // Caso Base: Detiene la recursión y evita Stack Overflow
+        if (n <= 1) {
+            return 1;
+        }
+        // Caso Recursivo: La llamada a sí mismo apila el estado de 'n'
+        return n * calcularFactorial(n - 1); 
+    }
+
+    // 2. Iteración (Para Comparación)
+    public static long factorialIterativo(int n) {
+        long resultado = 1;
+        for (int i = 2; i <= n; i++) {
+            resultado *= i;
+        }
+        return resultado;
+    }
+
+    public static void main(String[] args) {
+        int numero = 7;
+        
+        System.out.println("Factorial de " + numero + " (Recursivo): " + calcularFactorial(numero));
+        System.out.println("Factorial de " + numero + " (Iterativo): " + factorialIterativo(numero));
+    }
+}
