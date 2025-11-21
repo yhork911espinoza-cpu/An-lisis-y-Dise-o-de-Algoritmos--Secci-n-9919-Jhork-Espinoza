@@ -1,0 +1,51 @@
+// FUNCIÓN PRINCIPAL: Inicia el proceso de búsqueda
+FUNCIÓN EncontrarSubconjunto(Conjunto, SumaObjetivo):
+    // Llama a la función recursiva desde el primer elemento (índice 0)
+    // con una suma inicial de 0.
+    RETORNAR Backtracking(0, 0, SumaObjetivo, Conjunto)
+
+// FUNCIÓN RECURSIVA Y CON BACKTRACKING
+FUNCIÓN Backtracking(
+    indice_actual, 
+    suma_actual, 
+    SumaObjetivo, 
+    Conjunto
+):
+    // 1. CONDICIÓN DE ÉXITO (Solución Encontrada)
+    SI suma_actual == SumaObjetivo:
+        IMPRIMIR "¡Solución Encontrada!"
+        RETORNAR VERDADERO
+
+    // 2. CONDICIÓN DE FRACASO Y PODA (Poda/Optimización)
+    // Se aborta la búsqueda si:
+    // a) Hemos revisado todos los elementos.
+    // b) La suma actual ya superó el objetivo (Poda por exceso).
+    SI indice_actual == Conjunto.longitud O 
+       suma_actual > SumaObjetivo:
+        RETORNAR FALSO
+    
+    // 3. ESTRATEGIA I: INCLUIR el elemento actual (AVANZA)
+    // Tomamos el elemento en el índice actual y avanzamos al siguiente índice.
+    SI Backtracking(
+        indice_actual + 1, 
+        suma_actual + Conjunto[indice_actual], 
+        SumaObjetivo, 
+        Conjunto
+    ) == VERDADERO:
+        RETORNAR VERDADERO
+
+    // 4. ESTRATEGIA II: EXCLUIR el elemento actual (VUELTA ATRÁS)
+    // Ignoramos el elemento en el índice actual (no lo sumamos) y 
+    // avanzamos al siguiente índice para explorar esta rama.
+    // NOTA: No necesitamos deshacer nada (volver atrás) porque el elemento
+    // nunca se agregó permanentemente a la suma actual de la llamada previa.
+    SI Backtracking(
+        indice_actual + 1, 
+        suma_actual, 
+        SumaObjetivo, 
+        Conjunto
+    ) == VERDADERO:
+        RETORNAR VERDADERO
+
+    // Si ninguna de las dos estrategias lleva a una solución, regresamos FALSO
+    RETORNAR FALSO
